@@ -83,23 +83,17 @@
 #  }
 #
 define consul::service (
-  Optional[String[1]]         $address              = undef,
-  Array[Hash]                 $checks               = [],
-  Boolean                     $enable_tag_override  = false,
-  String[1]                   $ensure               = 'present',
-  String[1]                   $id                   = $title,
-  Optional[Integer[0, 65535]] $port                 = undef,
-  String[1]                   $service_name         = $title,
-  Hash                        $service_config_hash  = {},
-  Array[String[1]]            $tags                 = [],
-  Optional[String[1]]         $token                = undef,
-  Optional[Hash[
-    String[1],
-    Variant[
-      String[1],
-      Numeric,
-      Boolean,
-  ]]]                         $meta                 = undef,
+  $address              = undef,
+  $checks               = [],
+  $enable_tag_override  = false,
+  $ensure               = 'present',
+  $id                   = $title,
+  $port                 = undef,
+  $service_name         = $title,
+  $service_config_hash  = {},
+  $tags                 = [],
+  $token                = undef,
+  $meta                 = undef,
 ) {
 
   include consul
@@ -127,7 +121,7 @@ define consul::service (
   $basic_hash = $default_config_hash + $service_config_hash
 
   $service_hash = {
-    service => $basic_hash.filter |$key, $val| { $val =~ NotUndef },
+    service => delete_undef_values($basic_hash),
   }
 
   $escaped_id = regsubst($id,'\/','_','G')

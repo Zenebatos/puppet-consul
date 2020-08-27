@@ -184,59 +184,59 @@
 #    }
 #
 class consul (
-  Hash                                  $acls                        = {},
-  Hash[String[1], Consul::TokenStruct]  $tokens                      = {},
-  Hash[String[1], Consul::PolicyStruct] $policies                    = {},
-  String[1]                             $acl_api_hostname            = 'localhost',
-  String[1]                             $acl_api_protocol            = 'http',
-  Integer[1, 65535]                     $acl_api_port                = 8500,
-  Integer[1]                            $acl_api_tries               = 3,
-  String[0]                             $acl_api_token               = '',
-  String[1]                             $arch                        = $consul::params::arch,
-  Optional[Stdlib::Absolutepath]        $archive_path                = undef,
-  Stdlib::Absolutepath                  $bin_dir                     = $consul::params::bin_dir,
-  Optional[String[1]]                   $binary_group                = $consul::params::binary_group,
-  String[1]                             $binary_mode                 = $consul::params::binary_mode,
-  String[1]                             $binary_name                 = $consul::params::binary_name,
-  String[1]                             $binary_owner                = $consul::params::binary_owner,
-  Hash                                  $checks                      = {},
-  Hash                                  $config_defaults             = $consul::params::config_defaults,
-  Stdlib::Absolutepath                  $config_dir                  = $consul::params::config_dir,
-  Hash                                  $config_hash                 = {},
-  String[1]                             $config_mode                 = '0664',
-  String[1]                             $data_dir_mode               = $consul::params::data_dir_mode,
-  String[1]                             $docker_image                = 'consul',
-  String[1]                             $download_extension          = 'zip',
-  Optional[Stdlib::HTTPUrl]             $download_url                = undef,
-  String[1]                             $download_url_base           = 'https://releases.hashicorp.com/consul/',
-  Array                                 $extra_groups                = [],
-  Optional[String[1]]                   $extra_options               = undef,
-  String[1]                             $group                       = $consul::params::group,
-  Stdlib::Absolutepath                  $log_file                    = '/var/log/consul',
-  String[1]                             $init_style                  = $consul::params::init_style,
-  String[1]                             $install_method              = 'url',
-  Optional[String[1]]                   $join_wan                    = undef,
-  Boolean                               $manage_group                = $consul::params::manage_group,
-  Boolean                               $manage_service              = true,
-  Boolean                               $manage_user                 = $consul::params::manage_user,
-  Boolean                               $manage_data_dir             = true,
-  String[1]                             $os                          = $facts['kernel'].downcase,
-  String[1]                             $package_ensure              = 'latest',
-  String[1]                             $package_name                = 'consul',
-  Boolean                               $pretty_config               = false,
-  Integer                               $pretty_config_indent        = 4,
-  Optional[Stdlib::HTTPUrl]             $proxy_server                = undef,
-  Boolean                               $purge_config_dir            = true,
-  Boolean                               $restart_on_change           = true,
-  Boolean                               $service_enable              = true,
-  Enum['stopped', 'running']            $service_ensure              = 'running',
-  Hash                                  $services                    = {},
-  String[1]                             $user                        = $consul::params::user,
-  String[1]                             $version                     = '1.2.3',
-  Hash                                  $watches                     = {},
-  Optional[String[1]]                   $shell                       = $consul::params::shell,
-  Boolean                               $enable_beta_ui              = false,
-  Boolean                               $allow_binding_to_root_ports = false,
+  $acls                        = {},
+  $tokens                      = {},
+  $policies                    = {},
+  $acl_api_hostname            = 'localhost',
+  $acl_api_protocol            = 'http',
+  $acl_api_port                = 8500,
+  $acl_api_tries               = 3,
+  $acl_api_token               = '',
+  $arch                        = $consul::params::arch,
+  $archive_path                = undef,
+  $bin_dir                     = $consul::params::bin_dir,
+  $binary_group                = $consul::params::binary_group,
+  $binary_mode                 = $consul::params::binary_mode,
+  $binary_name                 = $consul::params::binary_name,
+  $binary_owner                = $consul::params::binary_owner,
+  $checks                      = {},
+  $config_defaults             = $consul::params::config_defaults,
+  $config_dir                  = $consul::params::config_dir,
+  $config_hash                 = {},
+  $config_mode                 = '0664',
+  $data_dir_mode               = $consul::params::data_dir_mode,
+  $docker_image                = 'consul',
+  $download_extension          = 'zip',
+  $download_url                = undef,
+  $download_url_base           = 'https://releases.hashicorp.com/consul/',
+  $extra_groups                = [],
+  $extra_options               = undef,
+  $group                       = $consul::params::group,
+  $log_file                    = '/var/log/consul',
+  $init_style                  = $consul::params::init_style,
+  $install_method              = 'url',
+  $join_wan                    = undef,
+  $manage_group                = $consul::params::manage_group,
+  $manage_service              = true,
+  $manage_user                 = $consul::params::manage_user,
+  $manage_data_dir             = true,
+  $os                          = $facts['kernel'].downcase,
+  $package_ensure              = 'latest',
+  $package_name                = 'consul',
+  $pretty_config               = false,
+  $pretty_config_indent        = 4,
+  $proxy_server                = undef,
+  $purge_config_dir            = true,
+  $restart_on_change           = true,
+  $service_enable              = true,
+  $service_ensure              = 'running',
+  $services                    = {},
+  $user                        = $consul::params::user,
+  $version                     = '1.2.3',
+  $watches                     = {},
+  $shell                       = $consul::params::shell,
+  $enable_beta_ui              = false,
+  $allow_binding_to_root_ports = false,
 ) inherits consul::params {
 
   $real_download_url = pick(
@@ -275,9 +275,11 @@ class consul (
   }
 
   if dig($config_hash_real,'addresses','http') {
-    $http_addr = split($config_hash_real['addresses']['http'], ' ')[0]
+    $http_addr_parts = split($config_hash_real['addresses']['http'], ' ')
+    $http_addr = $http_addr_parts[0]
   } elsif ($config_hash_real['client_addr']) {
-    $http_addr = split($config_hash_real['client_addr'], ' ')[0]
+    $http_addr_parts = split($config_hash_real['client_addr'], ' ')
+    $http_addr = $http_addr_parts[0]
   } else {
     $http_addr = '127.0.0.1'
   }
@@ -339,13 +341,8 @@ class consul (
     'acl_api_token' => $acl_api_token,
   }
 
-  $policies.each | $name, $policy_config | {
-    $merges_policy_config = merge($global_acl_config, $policy_config)
-    create_resources(consul_policy, {$name => $merges_policy_config})
-  }
+  # TODO: This may break. Complex logic was in place and replaced by this.
+  create_resources(consul_policy, policies, global_acl_config)
+  create_resources(consul_token, tokens, global_acl_config)
 
-  $tokens.each | $name, $token_config | {
-    $merged_token_config = merge($global_acl_config, $token_config)
-    create_resources(consul_token, {$name => $merged_token_config})
-  }
 }

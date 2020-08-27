@@ -55,7 +55,7 @@ define consul::watch (
   $handler                       = undef,
   $key                           = undef,
   $keyprefix                     = undef,
-  Optional[Boolean] $passingonly = undef,
+  $passingonly                   = undef,
   $service                       = undef,
   $service_tag                   = undef,
   $state                         = undef,
@@ -139,7 +139,7 @@ define consul::watch (
   $merged_hash = merge($basic_hash, $type_hash)
 
   $watch_hash = {
-    watches => [$merged_hash.filter |$key, $val| { $val =~ NotUndef }],
+    watches => [delete_undef_values($merged_hash)],
   }
 
   file { "${consul::config_dir}/watch_${id}.json":

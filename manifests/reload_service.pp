@@ -37,7 +37,7 @@ class consul::reload_service {
     }
 
     if $consul::acl_api_token != '' {
-      $command = Sensitive("${command_part1} -token=${consul::acl_api_token}")
+      $command = "${command_part1} -token=${consul::acl_api_token}"
     } else {
       $command = $command_part1
     }

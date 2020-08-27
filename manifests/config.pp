@@ -20,11 +20,11 @@
 #   Bool. Should the service be restarted on changes
 #
 class consul::config (
-  Hash    $config_hash                 = $consul::config_hash_real,
-  Boolean $purge                       = $consul::purge_config_dir,
-  Boolean $enable_beta_ui              = $consul::enable_beta_ui,
-  Boolean $allow_binding_to_root_ports = $consul::allow_binding_to_root_ports,
-  Boolean $restart_on_change           = $consul::restart_on_change,
+  $config_hash                 = $consul::config_hash_real,
+  $purge                       = $consul::purge_config_dir,
+  $enable_beta_ui              = $consul::enable_beta_ui,
+  $allow_binding_to_root_ports = $consul::allow_binding_to_root_ports,
+  $restart_on_change           = $consul::restart_on_change,
 ) {
 
   $notify_service = $restart_on_change ? {
