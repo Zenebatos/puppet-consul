@@ -27,7 +27,7 @@ class consul::params {
     default   => '/usr/local/bin'
   }
 
-  case $::os['name'] {
+  case $::os_name {
     'windows': {
       $data_dir_mode = '0775'
       $binary_group = undef
@@ -59,7 +59,7 @@ class consul::params {
     }
   }
 
-  case $::os['name'] {
+  case $::os_name {
     'Ubuntu': {
       $shell = '/usr/sbin/nologin'
     }
