@@ -118,7 +118,7 @@ define consul::service (
     "${override_key}"   => $enable_tag_override,
   }
 
-  $basic_hash = $default_config_hash + $service_config_hash
+  $basic_hash = deep_merge($default_config_hash, $service_config_hash)
 
   $service_hash = {
     service => delete_undef_values($basic_hash),
