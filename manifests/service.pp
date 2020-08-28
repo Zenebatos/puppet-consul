@@ -115,7 +115,7 @@ define consul::service (
     'checks'            => $checks,
     'token'             => $token,
     'meta'              => $meta,
-    $override_key       => $enable_tag_override,
+    "${override_key}"   => $enable_tag_override,
   }
 
   $basic_hash = $default_config_hash + $service_config_hash
