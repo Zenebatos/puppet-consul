@@ -338,13 +338,14 @@ class consul (
     'acl_api_token' => $acl_api_token,
   }
 
-  # TODO: This may break. Complex logic was in place and replaced by this.
+  # TODO: This doesn't actually do a deep merge between the config in each item in
+  #   policies and global_acl_config. Won't be fixed until we get to puppet6.
   if $policies {
-    create_resources(consul_policy, policies, global_acl_config)
+    create_resources(consul_policy, $policies, $global_acl_config)
   }
 
   if $tokens {
-    create_resources(consul_token, tokens, global_acl_config)
+    create_resources(consul_token, $tokens, $global_acl_config)
   }
 
 }
