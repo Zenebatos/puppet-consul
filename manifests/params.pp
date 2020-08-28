@@ -16,18 +16,18 @@ class consul::params {
     }
   }
 
-  $config_dir = $::os::family ? {
+  $config_dir = $::osfamily ? {
     'FreeBSD' => '/usr/local/etc/consul.d',
     'windows' => 'C:\\ProgramData\\consul\\config',
     default   => '/etc/consul',
   }
 
-  $bin_dir = $::os::family ? {
+  $bin_dir = $::osfamily ? {
     'windows' => 'C:\\ProgramData\\consul',
     default   => '/usr/local/bin'
   }
 
-  case $::os::name {
+  case $::os['name'] {
     'windows': {
       $data_dir_mode = '0775'
       $binary_group = undef
@@ -59,7 +59,7 @@ class consul::params {
     }
   }
 
-  case $::os::name {
+  case $::os['name'] {
     'Ubuntu': {
       $shell = '/usr/sbin/nologin'
     }
@@ -83,7 +83,7 @@ class consul::params {
     }
   }
 
-  if $::os::family == 'windows' {
+  if $::osfamily == 'windows' {
     $init_style = 'unmanaged'
   } else {
     $init_style = $::service_provider ? {
