@@ -220,7 +220,7 @@ class consul (
   $manage_service              = true,
   $manage_user                 = $consul::params::manage_user,
   $manage_data_dir             = true,
-  $os                          = downcase($facts['kernel']),
+  $os                          = downcase($::kernel),
   $package_ensure              = 'latest',
   $package_name                = 'consul',
   $pretty_config               = false,

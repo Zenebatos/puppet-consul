@@ -5,14 +5,14 @@
 #
 class consul::params {
 
-  case $facts['architecture'] {
+  case $::architecture {
     'x86_64', 'x64', 'amd64': { $arch = 'amd64' }
     'i386':                   { $arch = '386'   }
     'aarch64':                { $arch = 'arm64' }
     'armv7l':                 { $arch = 'armhfv6'}
     /^arm.*/:                 { $arch = 'arm'   }
     default:                  {
-      fail("Unsupported kernel architecture: ${facts['architecture']}")
+      fail("Unsupported kernel architecture: ${::architecture}")
     }
   }
 
@@ -86,9 +86,9 @@ class consul::params {
   if $::os::family == 'windows' {
     $init_style = 'unmanaged'
   } else {
-    $init_style = $facts['service_provider'] ? {
+    $init_style = $::service_provider ? {
       undef   => 'systemd',
-      default => $facts['service_provider']
+      default => $::service_provider
     }
   }
 }

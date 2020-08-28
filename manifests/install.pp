@@ -17,7 +17,7 @@ class consul::install {
 
   # only notify if we are installing a new version (work around for switching
   # to archive module)
-  if $facts['consul_version'] != $consul::version {
+  if $::consul_version != $consul::version {
     $do_notify_service = Class['consul::run_service']
   } else {
     $do_notify_service = undef
