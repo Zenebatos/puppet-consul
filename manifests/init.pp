@@ -210,7 +210,7 @@ class consul (
   $download_url                = undef,
   $download_url_base           = 'https://releases.hashicorp.com/consul/',
   $extra_groups                = [],
-  $extra_options               = undef,
+  $extra_options               = '',
   $group                       = $consul::params::group,
   $log_file                    = '/var/log/consul',
   $init_style                  = $consul::params::init_style,
