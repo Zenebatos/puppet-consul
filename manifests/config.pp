@@ -129,7 +129,7 @@ class consul::config (
     owner   => $consul::user_real,
     group   => $consul::group_real,
     mode    => $consul::config_mode,
-    content => consul::sorted_json($config_hash, $consul::pretty_config, $consul::pretty_config_indent),
+    content => consul_sorted_json($config_hash, $consul::pretty_config, $consul::pretty_config_indent),
   }
 
 }

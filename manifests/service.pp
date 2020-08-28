@@ -98,7 +98,7 @@ define consul::service (
 
   include consul
 
-  consul::validate_checks($checks)
+  consul_validate_checks($checks)
 
   if versioncmp($consul::version, '1.0.0') >= 0 {
     $override_key = 'enable_tag_override'
@@ -130,7 +130,7 @@ define consul::service (
     owner   => $consul::user_real,
     group   => $consul::group_real,
     mode    => $consul::config_mode,
-    content => consul::sorted_json($service_hash, $consul::pretty_config, $consul::pretty_config_indent),
+    content => consul_sorted_json($service_hash, $consul::pretty_config, $consul::pretty_config_indent),
     notify  => Class['consul::reload_service'],
   }
 
