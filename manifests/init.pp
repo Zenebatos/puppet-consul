@@ -259,19 +259,19 @@ class consul (
     $data_dir = undef
   }
 
-  if dig($config_hash_real,['ports','http']) {
+  if dig44($config_hash_real,['ports','http']) {
     $http_port = $config_hash_real['ports']['http']
   } else {
     $http_port = 8500
   }
 
-  if dig($config_hash_real,['ports','https']) {
+  if dig44($config_hash_real,['ports','https']) {
     $https_port = $config_hash_real['ports']['https']
   } else {
     $https_port = Undef
   }
 
-  if dig($config_hash_real,['addresses','http']) {
+  if dig44($config_hash_real,['addresses','http']) {
     $http_addr_parts = split($config_hash_real['addresses']['http'], ' ')
     $http_addr = $http_addr_parts[0]
   } elsif ($config_hash_real['client_addr']) {
@@ -281,19 +281,19 @@ class consul (
     $http_addr = '127.0.0.1'
   }
 
-  if dig($config_hash_real,['verify_incoming']) {
+  if dig44($config_hash_real,['verify_incoming']) {
     $verify_incoming = $config_hash_real['verify_incoming']
   } else {
     $verify_incoming = false
   }
 
-  if dig($config_hash_real,['cert_file']) {
+  if dig44($config_hash_real,['cert_file']) {
     $cert_file = $config_hash_real['cert_file']
   } else {
     $cert_file = Undef
   }
 
-  if dig($config_hash_real,['key_file']) {
+  if dig44($config_hash_real,['key_file']) {
     $key_file = $config_hash_real['key_file']
   } else {
     $key_file = Undef
