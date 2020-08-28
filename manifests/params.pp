@@ -16,10 +16,10 @@ class consul::params {
     }
   }
 
-  $config_dir = $facts['os']['family'] ? {
+  $config_dir = $::os::family ? {
     'FreeBSD' => '/usr/local/etc/consul.d',
     'windows' => 'C:\\ProgramData\\consul\\config',
-    default   => '/etc/consul'
+    default   => '/etc/consul',
   }
 
   $bin_dir = $facts['os']['family'] ? {
