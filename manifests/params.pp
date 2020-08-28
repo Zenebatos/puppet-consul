@@ -22,12 +22,12 @@ class consul::params {
     default   => '/etc/consul',
   }
 
-  $bin_dir = $facts['os']['family'] ? {
+  $bin_dir = $::os::family ? {
     'windows' => 'C:\\ProgramData\\consul',
     default   => '/usr/local/bin'
   }
 
-  case $facts['os']['name'] {
+  case $::os::name {
     'windows': {
       $data_dir_mode = '0775'
       $binary_group = undef
@@ -59,7 +59,7 @@ class consul::params {
     }
   }
 
-  case $facts['os']['name'] {
+  case $::os::name {
     'Ubuntu': {
       $shell = '/usr/sbin/nologin'
     }
@@ -83,7 +83,7 @@ class consul::params {
     }
   }
 
-  if $facts['os']['family'] == 'windows' {
+  if $::os::family == 'windows' {
     $init_style = 'unmanaged'
   } else {
     $init_style = $facts['service_provider'] ? {
